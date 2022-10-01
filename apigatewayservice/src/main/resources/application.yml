@@ -17,7 +17,7 @@ spring:
 #          uri: lb://user-service
 #          predicates:
 #            - Path=/user-service/**
-        - id: user-service
+        - id: user-service # 로그인
           uri: lb://user-service
           predicates:
             - Path=/user-service/login
@@ -25,7 +25,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
+        - id: user-service # 회원가입
           uri: lb://user-service
           predicates:
             - Path=/user-service/users
@@ -41,6 +41,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
         - id: catalog-service
           uri: lb://catalog-service
           predicates:
@@ -78,3 +79,6 @@ eureka:
     fetch-registry: true
     service-url:
       default-zone: http://localhost:8761
+
+token:
+  secret: user_token
