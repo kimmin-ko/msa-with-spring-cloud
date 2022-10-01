@@ -20,7 +20,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/user-service")
 public class UserController {
 
     private final Environment env;
